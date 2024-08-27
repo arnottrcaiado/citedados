@@ -1,0 +1,29 @@
+data,hora,area_atuacao,ferramentas_digitais,importancia_dados,desafios_dados,inovacao_tecnologica
+2024-08-23,10:20:08,Educação Superior,"['Plataformas de EAD (Ex: Moodle, Google Classroom)', 'Aplicativos de Comunicação (Ex: WhatsApp, Slack)', 'Softwares de Avaliação (Ex: Kahoot, Socrative)']",Essencial,Tempo necessário para análise dos dados,Realidade Aumentada/Virtual
+2024-08-23,10:20:41,Educação Superior,"['Plataformas de EAD (Ex: Moodle, Google Classroom)', 'Aplicativos de Comunicação (Ex: WhatsApp, Slack)', 'Softwares de Avaliação (Ex: Kahoot, Socrative)']",Essencial,Tempo necessário para análise dos dados,Realidade Aumentada/Virtual
+2024-08-23,10:20:42,Educação Superior,"['Plataformas de EAD (Ex: Moodle, Google Classroom)', 'Aplicativos de Comunicação (Ex: WhatsApp, Slack)', 'Softwares de Avaliação (Ex: Kahoot, Socrative)']",Essencial,Tempo necessário para análise dos dados,Realidade Aumentada/Virtual
+2024-08-23,11:50:26,Ensino Médio,"['Aplicativos de Comunicação (Ex: WhatsApp, Slack)']",Muito importante,Acesso limitado a ferramentas e recursos,Blockchain
+2024-08-23,11:53:40,Ensino Médio,"['Ferramentas de Videoconferência (Ex: Zoom, Teams)', 'Plataformas de EAD (Ex: Moodle, Google Classroom)', 'Softwares de Avaliação (Ex: Kahoot, Socrative)']",Moderadamente importante,Tempo necessário para análise dos dados,Big Data
+2024-08-23,11:54:03,Educação Superior,"['Ferramentas de Videoconferência (Ex: Zoom, Teams)', 'Plataformas de EAD (Ex: Moodle, Google Classroom)', 'Softwares de Avaliação (Ex: Kahoot, Socrative)']",Moderadamente importante,Tempo necessário para análise dos dados,Big Data
+2024-08-23,12:02:53,Educação Superior,"['Ferramentas de Videoconferência (Ex: Zoom, Teams)', 'Aplicativos de Comunicação (Ex: WhatsApp, Slack)', 'Plataformas de EAD (Ex: Moodle, Google Classroom)']",Muito importante,Acesso limitado a ferramentas e recursos,Realidade Aumentada/Virtual
+2024-08-23,12:04:59,Educação Superior,"['Ferramentas de Videoconferência (Ex: Zoom, Teams)']",Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-23,12:08:03,Educação Superior,"['Ferramentas de Videoconferência (Ex: Zoom, Teams)', 'Aplicativos de Comunicação (Ex: WhatsApp, Slack)', 'Plataformas de EAD (Ex: Moodle, Google Classroom)']",Muito importante,Acesso limitado a ferramentas e recursos,Realidade Aumentada/Virtual
+2024-08-23,12:26:57,Educação Superior,,Muito importante,Acesso limitado a ferramentas e recursos,Realidade Aumentada/Virtual
+2024-08-23,12:32:11,Educação Superior,aaa,Muito importante,Tempo necessário para análise dos dados,Realidade Aumentada/Virtual
+2024-08-23,19:05:11,Educação Superior,"ppt, chat, openai",Muito importante,Acesso limitado a ferramentas e recursos,Realidade Aumentada/Virtual
+2024-08-23,21:13:07,Educação Superior,"Kahoot, Git",Muito importante,Acesso limitado a ferramentas e recursos,Big Data
+2024-08-23,22:55:28,Educação Superior,,Muito importante,Falta de treinamento adequado,Inteligência Artificial
+2024-08-24,17:32:31,Educação Superior,Kahoot,Não é importante,Tempo necessário para análise dos dados,Blockchain
+2024-08-24,17:32:34,Ensino Fundamental,,Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-24,17:33:25,Educação Corporativa,Kahoot,Moderadamente importante,Tempo necessário para análise dos dados,Big Data
+2024-08-24,17:33:28,Ensino Fundamental,,Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-24,17:33:45,Ensino Fundamental,Mentineter,Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-26,12:15:41,Ensino Fundamental,,Moderadamente importante,Tempo necessário para análise dos dados,Big Data
+2024-08-26,18:04:25,Outro,python,Moderadamente importante,Acesso limitado a ferramentas e recursos,Big Data
+2024-08-26,19:40:26,Ensino Fundamental,,Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-26,19:40:30,Ensino Fundamental,,Essencial,Falta de treinamento adequado,Inteligência Artificial
+2024-08-26,19:40:52,Educação Corporativa,,Muito importante,Falta de treinamento adequado,Inteligência Artificial
+2024-08-26,19:41:19,Educação Superior,python,Não é importante,Acesso limitado a ferramentas e recursos,Realidade Aumentada/Virtual
+2024-08-26,19:54:57,Ensino Fundamental,"""power bi""",Muito importante,Tempo necessário para análise dos dados,Big Data
+2024-08-27,00:24:55,Educação Superior,chat gpt,Muito importante,Tempo necessário para análise dos dados,Big Data
+2024-08-27,01:26:08,Ensino Médio,aaa,Muito importante,Tempo necessário para análise dos dados,Big Data

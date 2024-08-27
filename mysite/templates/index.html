@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participe e Construa o Futuro da Educação!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Participe e Construa o Futuro da Educação! 🚀</h1>
+
+    <form id="educacao-form">
+        <label for="area_atuacao">Qual é sua principal área de atuação na educação?</label>
+        <select id="area_atuacao" name="area_atuacao">
+            <option value="Ensino Fundamental">Ensino Fundamental</option>
+            <option value="Ensino Médio">Ensino Médio</option>
+            <option value="Educação Superior">Educação Superior</option>
+            <option value="Educação Corporativa">Educação Corporativa</option>
+            <option value="Outro">Outro</option>
+        </select>
+
+        <label for="ferramentas_digitais">Quais ferramentas digitais você utiliza regularmente em suas atividades educacionais?</label>
+        <textarea id="ferramentas_digitais" name="ferramentas_digitais" rows="3"></textarea>
+
+        <label for="importancia_dados">Como você avalia a importância dos dados na personalização do ensino?</label>
+        <select id="importancia_dados" name="importancia_dados">
+            <option value="Essencial">Essencial</option>
+            <option value="Muito importante">Muito importante</option>
+            <option value="Moderadamente importante">Moderadamente importante</option>
+            <option value="Pouco importante">Pouco importante</option>
+            <option value="Não é importante">Não é importante</option>
+        </select>
+
+        <label for="desafios_dados">Quais desafios você enfrenta ao integrar dados em sua prática educacional?</label>
+        <select id="desafios_dados" name="desafios_dados">
+            <option value="Falta de treinamento adequado">Falta de treinamento adequado</option>
+            <option value="Acesso limitado a ferramentas e recursos">Acesso limitado a ferramentas e recursos</option>
+            <option value="Tempo necessário para análise dos dados">Tempo necessário para análise dos dados</option>
+            <option value="Preocupações com a privacidade dos dados">Preocupações com a privacidade dos dados</option>
+            <option value="Não utilizo dados na minha prática">Não utilizo dados na minha prática</option>
+        </select>
+
+        <label for="inovacao_tecnologica">Qual inovação tecnológica você acredita que terá o maior impacto na educação nos próximos 5 anos?</label>
+        <select id="inovacao_tecnologica" name="inovacao_tecnologica">
+            <option value="Inteligência Artificial">Inteligência Artificial</option>
+            <option value="Realidade Aumentada/Virtual">Realidade Aumentada/Virtual</option>
+            <option value="Big Data">Big Data</option>
+            <option value="Blockchain">Blockchain</option>
+            <option value="Internet das Coisas (IoT)">Internet das Coisas (IoT)</option>
+        </select>
+
+        <button type="button" onclick="enviarDados()">Enviar</button>
+    </form>
+
+    <script>
+        function enviarDados() {
+            const formData = {
+                area_atuacao: document.getElementById('area_atuacao').value,
+                ferramentas_digitais: document.getElementById('ferramentas_digitais').value,
+                importancia_dados: document.getElementById('importancia_dados').value,
+                desafios_dados: document.getElementById('desafios_dados').value,
+                inovacao_tecnologica: document.getElementById('inovacao_tecnologica').value
+            };
+
+            fetch('/envia', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById('educacao-form').reset();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        }
+    </script>
+
+</body>
+</html>
