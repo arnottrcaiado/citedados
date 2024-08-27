@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, render_template
 import csv
 import os
 from datetime import datetime
+import pytz
+
 
 app = Flask(__name__)
 
@@ -17,6 +19,10 @@ if not os.path.exists(CSV_FILE):
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
+# Define o fuso horário de Recife
+recife_tz = pytz.timezone('America/Fortaleza')
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -30,9 +36,13 @@ def receber_dados():
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Faltam campos obrigatórios"}), 400
 
+
+    # Adicionar data e hora locais (Recife)
+    now = datetime.now(recife_tz)
+
     # Adicionar data e hora locais
-    data['data'] = datetime.now().strftime('%Y-%m-%d')
-    data['hora'] = datetime.now().strftime('%H:%M:%S')
+    data['data'] = now.strftime('%Y-%m-%d')
+    data['hora'] = now.strftime('%H:%M:%S')
 
     # Adicionar os dados ao CSV
     with open(CSV_FILE, 'a', newline='', encoding='utf-8') as csvfile:
