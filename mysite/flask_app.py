@@ -52,6 +52,18 @@ def receber_dados():
 
     return jsonify({"message": "Dados recebidos e armazenados com sucesso!"}), 200
 
+@app.route('/dados-echart', methods=['GET'])
+def obter_dados_echart():
+    dados = []
+
+    # Ler os dados do arquivo CSV
+    with open(CSV_FILE, 'r', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            dados.append(row)
+
+    return jsonify(dados), 200
+
 @app.route('/dados', methods=['GET'])
 def obter_dados():
     dados = []
@@ -91,6 +103,12 @@ def dashboard():
 
     # Renderizar o template com os dados
     return render_template('dashboard.html', dados=dados)
+
+# Endpoint para o dashboard com ECharts
+@app.route('/dashboard-echart')
+def dashboard_echart():
+    return render_template('dashboard-echart.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

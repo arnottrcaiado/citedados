@@ -37,15 +37,31 @@
             text-align: center;
             margin-bottom: 20px;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px; /* Aumentado o tamanho máximo */
         }
 
-        .header-box img {
-            max-width: 100%;
-            height: auto;
+        .header-box .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 15px;
+        }
+
+        .header-box .logo-container img {
+            max-width: 75%; /* Aumentando ainda mais as imagens */
+            height: auto;
+            margin: 0 10px;
+        }
+
+        /* Aplicando o filtro de cor apenas na primeira imagem */
+        .header-box .logo-container img:first-child {
             filter: brightness(0) saturate(100%) invert(18%) sepia(91%) saturate(750%) hue-rotate(203deg) brightness(96%) contrast(104%);
-            /* Isso aplica um filtro para deixar a logo em tom de azul */
+        }
+
+        /* Estilo específico para o QR code */
+        .header-box .logo-container img:last-child {
+            filter: none; /* Remove qualquer filtro que possa estar afetando o QR code */
+            contrast: 200%; /* Aumenta o contraste para destacar os elementos do QR code */
         }
 
         h1 {
@@ -112,8 +128,8 @@
                 font-size: 14px;
             }
 
-            .header-box img {
-                width: 80%;
+            .header-box .logo-container img {
+                max-width: 60%; /* Ajuste menor para telas médias */
             }
         }
 
@@ -134,8 +150,8 @@
                 font-size: 14px;
             }
 
-            .header-box img {
-                width: 100%;
+            .header-box .logo-container img {
+                max-width: 75%; /* Mantém as imagens grandes em telas menores */
             }
         }
     </style>
@@ -144,7 +160,14 @@
 
     <!-- Box de Cabeçalho -->
     <div class="header-box">
-        <img src="{{ url_for('static', filename='images/logo-cite 2024.png') }}" alt="Logo CITE 2024">
+        <div class="logo-container">
+            <a href="https://tecnologianaeducacao.com.br/programacao.html">
+                <img src="{{ url_for('static', filename='images/logo-cite 2024.png') }}" alt="Logo CITE 2024">
+            </a>
+            <a href="https://citedados.pythonanywhere.com/">
+                <img src="{{ url_for('static', filename='images/citedados.png') }}" alt="QR Code CITE Dados">
+            </a>
+        </div>
         <h1>Navegando na Era do Conhecimento</h1>
         <h1>O Letramento Crítico em Dados na Educação Básica</h1>
         <h1>Participe e Construa o Futuro da Educação! 🚀</h1>
