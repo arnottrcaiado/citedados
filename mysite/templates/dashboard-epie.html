@@ -106,7 +106,7 @@
             <a href="https://tecnologianaeducacao.com.br/programacao.html">
                 <img src="{{ url_for('static', filename='images/logo-cite 2024.png') }}" alt="Logo CITE 2024">
             </a>
-            <a href="https://citedados.com">
+            <a href="https://citedados.pythonanywhere.com">
                 <img src="{{ url_for('static', filename='images/citedados.png') }}" alt="QR Code CITE Dados">
             </a>
         </div>
@@ -115,7 +115,7 @@
         <h1>Participe e Construa o Futuro da Educação! 🚀</h1>
     </div>
 
-    <h1>Gráfico Dinâmico de Pizza - ECharts</h1>
+    <h1>Gráfico - Área de Atuação dos Participantes</h1>
 
     <!-- Container do gráfico -->
     <div id="main"></div>
@@ -130,158 +130,166 @@
             return contagem;
         }
 
-        // Fetch para obter os dados da API Flask
-        fetch('/dados-echart')
-            .then(response => response.json())
-            .then(data => {
-                // Extraindo as áreas de atuação
-                var rawData = data.map(item => item.area_atuacao);
+        // Função para atualizar o gráfico com novos dados
+        function atualizarGrafico() {
+            fetch('/dados-echart')
+                .then(response => response.json())
+                .then(data => {
+                    // Extraindo as áreas de atuação
+                    var rawData = data.map(item => item.area_atuacao);
 
-                // Contagem das incidências
-                var contagemIncidencias = contarIncidencias(rawData);
+                    // Contagem das incidências
+                    var contagemIncidencias = contarIncidencias(rawData);
 
-                // Preparando os dados para o gráfico
-                const chartData = Object.keys(contagemIncidencias).map(key => ({
-                    value: contagemIncidencias[key],
-                    name: key
-                }));
+                    // Preparando os dados para o gráfico
+                    const chartData = Object.keys(contagemIncidencias).map(key => ({
+                        value: contagemIncidencias[key],
+                        name: key
+                    }));
 
-                // Definindo as cores do gráfico
-                const defaultPalette = [
-                    '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de',
-                    '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'
-                ];
+                    // Definindo as cores do gráfico
+                    const defaultPalette = [
+                        '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de',
+                        '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'
+                    ];
 
-                const radius = ['30%', '80%'];
+                    const radius = ['30%', '80%'];
 
-                const pieOption = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{b}: {c} ({d}%)' // Exibe nome, valor e percentual na tooltip
-                    },
-                    series: [
-                        {
-                            type: 'pie',
-                            id: 'distribution',
-                            radius: radius,
-                            label: {
-                                show: true,
-                                formatter: '{b}\n{d}%', // Exibe nome e percentual no gráfico
-                                position: 'outside', // Posiciona os rótulos fora do gráfico
-                                textStyle: {
-                                    fontSize: 12,
-                                    fontWeight: 'bold'
-                                }
-                            },
-                            universalTransition: true,
-                            animationDurationUpdate: 1000,
-                            data: chartData
-                        }
-                    ]
-                };
-
-                const parliamentOption = (function () {
-                    let sum = chartData.reduce(function (sum, cur) {
-                        return sum + cur.value;
-                    }, 0);
-                    let angles = [];
-                    let startAngle = -Math.PI / 2;
-                    let curAngle = startAngle;
-                    chartData.forEach(function (item) {
-                        angles.push(curAngle);
-                        curAngle += (item.value / sum) * Math.PI * 2;
-                    });
-                    angles.push(startAngle + Math.PI * 2);
-
-                    function parliamentLayout(startAngle, endAngle, totalAngle, r0, r1, size) {
-                        let rowsCount = Math.ceil((r1 - r0) / size);
-                        let points = [];
-                        let r = r0;
-                        for (let i = 0; i < rowsCount; i++) {
-                            let totalRingSeatsNumber = Math.round((totalAngle * r) / size);
-                            let newSize = (totalAngle * r) / totalRingSeatsNumber;
-                            for (
-                                let k = Math.floor((startAngle * r) / newSize) * newSize;
-                                k < Math.floor((endAngle * r) / newSize) * newSize - 1e-6;
-                                k += newSize
-                            ) {
-                                let angle = k / r;
-                                let x = Math.cos(angle) * r;
-                                let y = Math.sin(angle) * r;
-                                points.push([x, y]);
-                            }
-                            r += size;
-                        }
-                        return points;
-                    }
-
-                    return {
+                    const pieOption = {
                         tooltip: {
                             trigger: 'item',
                             formatter: '{b}: {c} ({d}%)' // Exibe nome, valor e percentual na tooltip
                         },
-                        series: {
-                            type: 'custom',
-                            id: 'distribution',
-                            data: chartData,
-                            coordinateSystem: undefined,
-                            universalTransition: true,
-                            animationDurationUpdate: 1000,
-                            renderItem: function (params, api) {
-                                var idx = params.dataIndex;
-                                var viewSize = Math.min(api.getWidth(), api.getHeight());
-                                var r0 = ((parseFloat(radius[0]) / 100) * viewSize) / 2;
-                                var r1 = ((parseFloat(radius[1]) / 100) * viewSize) / 2;
-                                var cx = api.getWidth() * 0.5;
-                                var cy = api.getHeight() * 0.5;
-                                var size = viewSize / 50;
-                                var points = parliamentLayout(
-                                    angles[idx],
-                                    angles[idx + 1],
-                                    Math.PI * 2,
-                                    r0,
-                                    r1,
-                                    size + 3
-                                );
-                                return {
-                                    type: 'group',
-                                    children: points.map(function (pt) {
-                                        return {
-                                            type: 'circle',
-                                            autoBatch: true,
-                                            shape: {
-                                                cx: cx + pt[0],
-                                                cy: cy + pt[1],
-                                                r: size / 2
-                                            },
-                                            style: {
-                                                fill: defaultPalette[idx % defaultPalette.length]
-                                            }
-                                        };
-                                    })
-                                };
+                        series: [
+                            {
+                                type: 'pie',
+                                id: 'distribution',
+                                radius: radius,
+                                label: {
+                                    show: true,
+                                    formatter: '{b}\n{d}%', // Exibe nome e percentual no gráfico
+                                    position: 'outside', // Posiciona os rótulos fora do gráfico
+                                    textStyle: {
+                                        fontSize: 12,
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                universalTransition: true,
+                                animationDurationUpdate: 1000,
+                                data: chartData
                             }
-                        }
+                        ]
                     };
-                })();
 
-                let currentOption = (option = pieOption);
+                    const parliamentOption = (function () {
+                        let sum = chartData.reduce(function (sum, cur) {
+                            return sum + cur.value;
+                        }, 0);
+                        let angles = [];
+                        let startAngle = -Math.PI / 2;
+                        let curAngle = startAngle;
+                        chartData.forEach(function (item) {
+                            angles.push(curAngle);
+                            curAngle += (item.value / sum) * Math.PI * 2;
+                        });
+                        angles.push(startAngle + Math.PI * 2);
 
-                var chartDom = document.getElementById('main');
-                var myChart = echarts.init(chartDom, null, {
-                    renderer: 'svg' // Usando o renderizador SVG para melhor qualidade
-                });
+                        function parliamentLayout(startAngle, endAngle, totalAngle, r0, r1, size) {
+                            let rowsCount = Math.ceil((r1 - r0) / size);
+                            let points = [];
+                            let r = r0;
+                            for (let i = 0; i < rowsCount; i++) {
+                                let totalRingSeatsNumber = Math.round((totalAngle * r) / size);
+                                let newSize = (totalAngle * r) / totalRingSeatsNumber;
+                                for (
+                                    let k = Math.floor((startAngle * r) / newSize) * newSize;
+                                    k < Math.floor((endAngle * r) / newSize) * newSize - 1e-6;
+                                    k += newSize
+                                ) {
+                                    let angle = k / r;
+                                    let x = Math.cos(angle) * r;
+                                    let y = Math.sin(angle) * r;
+                                    points.push([x, y]);
+                                }
+                                r += size;
+                            }
+                            return points;
+                        }
 
-                setInterval(function () {
-                    currentOption = currentOption === pieOption ? parliamentOption : pieOption;
-                    myChart.setOption(currentOption);
-                }, 2000);
+                        return {
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: '{b}: {c} ({d}%)' // Exibe nome, valor e percentual na tooltip
+                            },
+                            series: {
+                                type: 'custom',
+                                id: 'distribution',
+                                data: chartData,
+                                coordinateSystem: undefined,
+                                universalTransition: true,
+                                animationDurationUpdate: 1000,
+                                renderItem: function (params, api) {
+                                    var idx = params.dataIndex;
+                                    var viewSize = Math.min(api.getWidth(), api.getHeight());
+                                    var r0 = ((parseFloat(radius[0]) / 100) * viewSize) / 2;
+                                    var r1 = ((parseFloat(radius[1]) / 100) * viewSize) / 2;
+                                    var cx = api.getWidth() * 0.5;
+                                    var cy = api.getHeight() * 0.5;
+                                    var size = viewSize / 50;
+                                    var points = parliamentLayout(
+                                        angles[idx],
+                                        angles[idx + 1],
+                                        Math.PI * 2,
+                                        r0,
+                                        r1,
+                                        size + 3
+                                    );
+                                    return {
+                                        type: 'group',
+                                        children: points.map(function (pt) {
+                                            return {
+                                                type: 'circle',
+                                                autoBatch: true,
+                                                shape: {
+                                                    cx: cx + pt[0],
+                                                    cy: cy + pt[1],
+                                                    r: size / 2
+                                                },
+                                                style: {
+                                                    fill: defaultPalette[idx % defaultPalette.length]
+                                                }
+                                            };
+                                        })
+                                    };
+                                }
+                            }
+                        };
+                    })();
 
-                myChart.setOption(option);
-            })
-            .catch(error => console.error('Erro ao carregar os dados do gráfico:', error));
+                    let currentOption = (option = pieOption);
+
+                    setInterval(function () {
+                        currentOption = currentOption === pieOption ? parliamentOption : pieOption;
+                        myChart.setOption(currentOption);
+                    }, 2000);
+
+                    myChart.setOption(option);
+                })
+                .catch(error => console.error('Erro ao carregar os dados do gráfico:', error));
+        }
+
+        // Inicializa o gráfico
+        var chartDom = document.getElementById('main');
+        var myChart = echarts.init(chartDom, null, {
+            renderer: 'svg' // Usando o renderizador SVG para melhor qualidade
+        });
+
+        // Primeira chamada para carregar o gráfico
+        atualizarGrafico();
+
+        // Configura para atualizar o gráfico automaticamente a cada 10 segundos
+        setInterval(atualizarGrafico, 10000);
     </script>
 
 </body>
 </html>
-
