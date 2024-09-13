@@ -3,9 +3,11 @@ import csv
 import os
 from datetime import datetime
 import pytz
-
+#from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+#socketio = SocketIO(app)
+
 
 # Define o caminho absoluto para o arquivo CSV na pasta 'data'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -49,6 +51,8 @@ def receber_dados():
         fieldnames = ['data', 'hora', 'area_atuacao', 'ferramentas_digitais', 'importancia_dados', 'desafios_dados', 'inovacao_tecnologica']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow(data)
+
+#    socketio.emit('dados_atualizados', data)
 
     return jsonify({"message": "Dados recebidos e armazenados com sucesso!"}), 200
 
@@ -114,5 +118,17 @@ def dashboard_echart():
 def dashboard_pie():
     return render_template('dashboard-epie.html')
 
+'''
+@socketio.on('connect')
+def handle_connect():
+    print('Cliente conectado')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Cliente desconectado')
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
+'''
 if __name__ == '__main__':
     app.run(debug=True)
