@@ -164,46 +164,49 @@
             <a href="https://tecnologianaeducacao.com.br/programacao.html">
                 <img src="{{ url_for('static', filename='images/logo-cite 2024.png') }}" alt="Logo CITE 2024">
             </a>
-            <a href="https://citedados.pythonanywhere.com/dashboard">
-                <img src="{{ url_for('static', filename='images/Logo_Letramento_SemFundo.png') }}" alt="Dashboard">
+            <a href="https://citedados.pythonanywhere.com/">
+                <img src="{{ url_for('static', filename='images/citedados.png') }}" alt="QR Code CITE Dados">
             </a>
         </div>
-        <h1>"Navegando na Era do Conhecimento:</h1>
-        <h1>O Letramento Crítico em Dados na Educação Básica"</h1>
-        <h1 style="font-size: 20px;">Participe e Construa o Futuro da Educação! 🚀</h1>
+        <h1>Navegando na Era do Conhecimento</h1>
+        <h1>O Letramento Crítico em Dados na Educação Básica</h1>
+        <h1>Participe e Construa o Futuro da Educação! 🚀</h1>
     </div>
 
     <form id="educacao-form">
-        <label for="uso_dados">Você já integra o uso de dados em suas práticas educacionais?</label>
-        <select id="uso_dados" name="uso_dados" required>
-            <option value="" disabled selected>Selecione uma opção</option>
-            <option value="Sim">Sim, de forma regular.</option>
-            <option value="Raramente">Raramente.</option>
-            <option value="Não">Não, ainda não.</option>
+        <label for="area_atuacao">Qual é sua principal área de atuação na educação?</label>
+        <select id="area_atuacao" name="area_atuacao" required>
+            <option value="" disabled selected>Selecione sua área</option>
+            <option value="Ensino Fundamental">Ensino Fundamental</option>
+            <option value="Ensino Médio">Ensino Médio</option>
+            <option value="Educação Superior">Educação Superior</option>
+            <option value="Educação Corporativa">Educação Corporativa</option>
+            <option value="Outro">Outro</option>
         </select>
 
-        <!--
         <label for="ferramentas_digitais">Quais ferramentas digitais você utiliza regularmente em suas atividades educacionais?</label>
         <textarea id="ferramentas_digitais" name="ferramentas_digitais" rows="3" placeholder="Ex: Google Classroom, Zoom..." required></textarea>
-        -->
 
-        <label for="dificuldade">Qual é o maior desafio que você encontra ao trabalhar com dados em sala de aula?</label>
-        <select id="dificuldade" name="dificuldade" required>
+        <label for="importancia_dados">Como você avalia a importância dos dados na personalização do ensino?</label>
+        <select id="importancia_dados" name="importancia_dados" required>
+            <option value="" disabled selected>Selecione a importância</option>
+            <option value="Essencial">Essencial</option>
+            <option value="Muito importante">Muito importante</option>
+            <option value="Moderadamente importante">Moderadamente importante</option>
+            <option value="Pouco importante">Pouco importante</option>
+            <option value="Não é importante">Não é importante</option>
+        </select>
+
+        <label for="desafios_dados">Quais desafios você enfrenta ao integrar dados em sua prática educacional?</label>
+        <select id="desafios_dados" name="desafios_dados" required>
             <option value="" disabled selected>Selecione um desafio</option>
-            <option value="Falta recursos">Falta de recursos e ferramentas.</option>
-            <option value="Formação insuficiente">Considero minha formação insuficiente.</option>
-            <option value="Outros">Outros.</option>
+            <option value="Falta de treinamento adequado">Falta de treinamento adequado</option>
+            <option value="Acesso limitado a ferramentas e recursos">Acesso limitado a ferramentas e recursos</option>
+            <option value="Tempo necessário para análise dos dados">Tempo necessário para análise dos dados</option>
+            <option value="Preocupações com a privacidade dos dados">Preocupações com a privacidade dos dados</option>
+            <option value="Não utilizo dados na minha prática">Não utilizo dados na minha prática</option>
         </select>
 
-        <label for="tema_relevante">Qual desses temas você considera mais relevante para ensinar Letramento de Dados?</label>
-        <select id="tema_relevante" name="tema_relevante" required>
-            <option value="" disabled selected>Selecione um tema</option>
-            <option value="Inteligência Artificial">Inteligência Artificial.</option>
-            <option value="Fake News">Fake News e Desinformação.</option>
-            <option value="Privacidade Dados">Privacidade de Dados e Redes Sociais.</option>
-        </select>
-
-        <!--
         <label for="inovacao_tecnologica">Qual inovação tecnológica você acredita que terá o maior impacto na educação nos próximos 5 anos?</label>
         <select id="inovacao_tecnologica" name="inovacao_tecnologica" required>
             <option value="" disabled selected>Selecione uma inovação</option>
@@ -213,27 +216,18 @@
             <option value="Blockchain">Blockchain</option>
             <option value="Internet das Coisas (IoT)">Internet das Coisas (IoT)</option>
         </select>
-        -->
 
         <button type="button" onclick="enviarDados()">Enviar</button>
     </form>
 
     <script>
         function enviarDados() {
-
-            const usoDados = document.getElementById('uso_dados').value;
-            const dificuldade = document.getElementById('dificuldade').value;
-            const temaRelevante = document.getElementById('tema_relevante').value;
-
-            if (!usoDados || !dificuldade || !temaRelevante) {
-                alert("Por favor, preencha todas as perguntas antes de enviar.");
-                return; // Impede o envio se algum campo estiver vazio
-            }
-
             const formData = {
-                uso_dados: usoDados,
-                dificuldade:  dificuldade,
-                tema_relevante: temaRelevante,
+                area_atuacao: document.getElementById('area_atuacao').value,
+                ferramentas_digitais: document.getElementById('ferramentas_digitais').value,
+                importancia_dados: document.getElementById('importancia_dados').value,
+                desafios_dados: document.getElementById('desafios_dados').value,
+                inovacao_tecnologica: document.getElementById('inovacao_tecnologica').value
             };
 
             fetch('/envia', {

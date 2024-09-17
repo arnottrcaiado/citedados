@@ -3,8 +3,10 @@ import csv
 import os
 from datetime import datetime
 import pytz
+#from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+#socketio = SocketIO(app)
 
 
 # Define o caminho absoluto para o arquivo CSV na pasta 'data'
@@ -15,7 +17,7 @@ CSV_FILE = os.path.join(BASE_DIR, 'dados', 'dados_educacao.csv')
 if not os.path.exists(CSV_FILE):
     os.makedirs(os.path.dirname(CSV_FILE), exist_ok=True)
     with open(CSV_FILE, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['data', 'hora', 'uso_dados', 'dificuldade', 'tema_relevante']
+        fieldnames = ['data', 'hora', 'area_atuacao', 'ferramentas_digitais', 'importancia_dados', 'desafios_dados', 'inovacao_tecnologica']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -32,7 +34,7 @@ def receber_dados():
     data = request.json
 
     # Verificar se todos os campos necessários estão presentes no JSON
-    required_fields = ['uso_dados', 'dificuldade', 'tema_relevante']
+    required_fields = ['area_atuacao', 'ferramentas_digitais', 'importancia_dados', 'desafios_dados', 'inovacao_tecnologica']
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Faltam campos obrigatórios"}), 400
 
@@ -46,7 +48,7 @@ def receber_dados():
 
     # Adicionar os dados ao CSV
     with open(CSV_FILE, 'a', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['data', 'hora','uso_dados', 'dificuldade', 'tema_relevante']
+        fieldnames = ['data', 'hora', 'area_atuacao', 'ferramentas_digitais', 'importancia_dados', 'desafios_dados', 'inovacao_tecnologica']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writerow(data)
 
@@ -85,9 +87,11 @@ def dashboard():
     dados = {
         "data": [],
         "hora": [],
-        "uso_dados": [],
-        "dificuldade": [],
-        "tema_relevante": []
+        "area_atuacao": [],
+        "ferramentas_digitais": [],
+        "importancia_dados": [],
+        "desafios_dados": [],
+        "inovacao_tecnologica": []
     }
 
     with open(CSV_FILE, 'r', encoding='utf-8') as csvfile:
@@ -95,9 +99,11 @@ def dashboard():
         for row in reader:
             dados["data"].append(row['data'])
             dados["hora"].append(row['hora'])
-            dados["uso_dados"].append(row['uso_dados'])
-            dados["dificuldade"].append(row['dificuldade'])
-            dados["tema_relevante"].append(row['tema_relevante'])
+            dados["area_atuacao"].append(row['area_atuacao'])
+            dados["ferramentas_digitais"].extend(row['ferramentas_digitais'].strip('][').split(', '))
+            dados["importancia_dados"].append(row['importancia_dados'])
+            dados["desafios_dados"].append(row['desafios_dados'])
+            dados["inovacao_tecnologica"].append(row['inovacao_tecnologica'])
 
     # Renderizar o template com os dados
     return render_template('dashboard.html', dados=dados)
@@ -112,5 +118,17 @@ def dashboard_echart():
 def dashboard_pie():
     return render_template('dashboard-epie.html')
 
+'''
+@socketio.on('connect')
+def handle_connect():
+    print('Cliente conectado')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Cliente desconectado')
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
+'''
 if __name__ == '__main__':
     app.run(debug=True)
